@@ -7,9 +7,7 @@ import { TreeModel, TreeNode } from 'angular-tree-component';
   styleUrls: ['./tree.component.css']
 })
 export class TreeComponent {
-  options = {
-    useCheckbox: true
-  };
+  options = {};
   nodes = [
     {
       name: 'North America',
@@ -41,39 +39,7 @@ export class TreeComponent {
     }
   ];
 
-  filterFn(value: string, treeModel: TreeModel) {
-    treeModel.filterNodes((node: TreeNode) =>
-      this.fuzzysearch(value, node.data.name)
-    );
-  }
-
-  fuzzysearch(needle: string, haystack: string) {
-    const haystackLC = haystack.toLowerCase();
-    const needleLC = needle.toLowerCase();
-
-    const hlen = haystack.length;
-    const nlen = needleLC.length;
-
-    if (nlen > hlen) {
-      return false;
-    }
-    if (nlen === hlen) {
-      return needleLC === haystackLC;
-    }
-    outer: for (let i = 0, j = 0; i < nlen; i++) {
-      const nch = needleLC.charCodeAt(i);
-
-      while (j < hlen) {
-        if (haystackLC.charCodeAt(j++) === nch) {
-          continue outer;
-        }
-      }
-      return false;
-    }
-    return true;
-  }
-
-  public menuClicked(tree) {
+  public nodeClicked(tree) {
     console.log(tree.node.data.name);
     switch (tree.node.data.id) {
       case 1:
